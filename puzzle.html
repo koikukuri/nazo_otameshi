@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>試練の間 - GitHubデモ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* スクロールをスムーズにするための調整 */
+        html { scroll-behavior: smooth; }
+        /* アプリ全体のデザイン基調である明るい青を設定 */
+        .bg-primary { background-color: #3b82f6; /* blue-500 */ }
+        .text-primary { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="loading-overlay" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
+        <div class="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
+        <p id="loading-text" class="ml-4 text-lg">試練を読み込んでいます...</p>
+    </div>
+
+    <header class="bg-primary text-white p-4 sticky top-0 z-10 flex justify-between items-center shadow-lg">
+        <div>
+            <span id="header-reception-number" class="font-bold text-lg">--</span>
+            <span id="header-nickname" class="ml-2">--</span>
+        </div>
+        <div class="flex items-center bg-yellow-400 text-gray-900 px-3 py-1 rounded-full shadow-md">
+            <i class="fas fa-coins mr-2"></i>
+            <span id="header-points" class="font-extrabold text-lg">----</span>
+            <span class="text-xs ml-1">pt</span>
+        </div>
+    </header>
+
+    <main id="main-content" class="w-full max-w-2xl mx-auto p-4 hidden">
+        <h1 id="puzzle-title" class="text-3xl font-extrabold text-center mb-6 text-gray-800">
+            </h1>
+        
+        <div class="bg-white rounded-xl shadow-2xl p-6 border-t-8 border-blue-500">
+            <div id="puzzle-view">
+                
+                <div id="retry-message" class="hidden text-center bg-green-100 text-green-700 p-3 mb-4 rounded-md text-sm font-medium">
+                    <i class="fas fa-check-circle mr-2"></i> この謎は既に解き明かされています。復習できますが、ポイントは獲得できません。
+                </div>
+                
+                <div id="puzzle-content" class="mb-6 flex flex-col items-center space-y-4">
+                    </div>
+
+                <div id="coop-message" class="hidden text-center bg-yellow-100 p-4 mb-4 rounded-lg border border-yellow-300">
+                    <i class="fas fa-users text-yellow-600 mr-2"></i>
+                    <p class="font-bold text-yellow-700">【協力謎】</p>
+                    <p class="text-sm text-yellow-600">この謎を解き明かした後、異性の参加者と協力プレイが可能です！</p>
+                </div>
+
+                <div id="hint-status-container" class="space-y-4 mb-8 block p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <h3 class="font-bold text-blue-700 text-lg border-b pb-2 mb-3">ヒントの所持状況 (交流のチャンス!)</h3>
+                    <p id="hint-list-message" class="text-gray-600 text-center">ヒント情報を読み込み中です...</p>
+                </div>
+
+                <form id="answer-form" class="block">
+                    <label for="answer-input" class="block text-sm font-extrabold text-gray-700 mb-2">試練の答えを入力</label>
+                    <div class="mt-1 flex gap-2">
+                        <input type="text" id="answer-input" class="w-full p-3 border-2 border-gray-300 focus:border-blue-500 rounded-lg text-lg" placeholder="答えを入力">
+                        <button type="button" id="submit-answer-button" class="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-150 ease-in-out">
+                            回答する
+                        </button>
+                    </div>
+                    <p id="result-message" class="text-center mt-4 h-6"></p>
+                </form>
+            </div>
+
+            <div id="matchmaking-view" class="hidden text-center p-6 border-2 border-dashed border-green-300 rounded-xl bg-green-50">
+                <h2 class="text-green-600 font-extrabold mb-4 text-3xl"><i class="fas fa-star mr-2"></i> 正解！</h2>
+                
+                <div class="text-sm bg-blue-100 p-4 rounded-lg mb-6 shadow-inner">
+                    <p class="font-bold text-blue-800 text-lg">🌸 協力プレイボーナス発生！</p>
+                    <p class="mt-2 text-blue-700">異性のパートナーと協力プレイ（質問リレー）に挑戦できます。</p>
+                </div>
+                
+                <div id="lobby-status" class="my-4 text-gray-700 font-medium">
+                    </div>
+                
+                <div id="available-rooms-container" class="space-y-3 mb-6">
+                    </div>
+                
+                <button id="create-room-button" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold py-3 px-4 rounded-xl text-lg transition duration-150 ease-in-out shadow-lg">
+                    <i class="fas fa-heart mr-2"></i> 自分がルームを作成して待つ
+                </button>
+            </div>
+        </div>
+        
+        <div class="text-center mt-6">
+            <a href="menu.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium p-3 rounded-full transition duration-150">
+                <i class="fas fa-arrow-left mr-2"></i> メニューに戻る (デモ)
+            </a>
+        </div>
+    </main>
+
+    <script src="puzzle.js"></script>
+</body>
+</html>
